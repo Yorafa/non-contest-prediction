@@ -20,12 +20,12 @@ class LeetcodeAPI:
         # Create a GraphQL client using the defined transport
         self.client = Client(transport=transport, fetch_schema_from_transport=False)
 
-    def problemList(self, skip: int, limit: int):
+    def problemList(self, skip: int, limit: int) -> Dict:
         query = gql("""\n    query problemsetQuestionList($categorySlug: String, $limit: Int, $skip: Int, $filters: QuestionListFilterInput) {\n  problemsetQuestionList: questionList(\n    categorySlug: $categorySlug\n    limit: $limit\n    skip: $skip\n    filters: $filters\n  ) {\n    total: totalNum\n    questions: data {\n      acRate\n      difficulty\n      freqBar\n      frontendQuestionId: questionFrontendId\n      isFavor\n      paidOnly: isPaidOnly\n      status\n      title\n      titleSlug\n      topicTags {\n        name\n        id\n        slug\n      }\n      hasSolution\n      hasVideoSolution\n    }\n  }\n}\n    """)
         variables = {"categorySlug": "all-code-essentials", "limit": "%d" % limit, "skip": "%d" % skip, "filters": {}}
         return self.client.execute(query,variable_values=variables, operation_name="problemsetQuestionList")
     
-    def questionStats(self, titleSlug: str):
+    def questionStats(self, titleSlug: str) -> Dict:
         query = gql("""\n    query questionStats($titleSlug: String!) {\n  question(titleSlug: $titleSlug) {\n    stats\n  }\n}\n    """)
         variables = {"titleSlug": titleSlug}
         return self.client.execute(query,variable_values=variables, operation_name="questionStats")
