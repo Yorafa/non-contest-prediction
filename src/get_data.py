@@ -68,12 +68,12 @@ def load_ratings(path: str = "../data/ratings.json"):
         return json.load(r)
 
 if __name__ == "__main__":
-    # questions = get_all_questions()
-    # rating = get_ratings()
-    # save_questions(questions)
-    # save_ratings(rating)
-    questions = load_questions()
-    ratings = load_ratings()
+    questions = get_all_questions()
+    ratings = get_ratings()
+    save_questions(questions)
+    save_ratings(ratings)
+    # questions = load_questions()
+    # ratings = load_ratings()
     questions = merge_question_ratings(questions, ratings)
     questions = merge_question_stats(questions)
     save_questions(questions, "../data/questions_with_rating.json")
